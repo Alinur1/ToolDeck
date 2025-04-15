@@ -48,6 +48,7 @@ namespace ToolDeck
                 timer1.Stop();
                 PlayAlarmSound();
                 labelTimer.Text = "00:00:00";
+                showUI();
                 MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -57,11 +58,31 @@ namespace ToolDeck
             SystemSounds.Exclamation.Play();
         }
 
+        private void hideUI()
+        {
+            numHour.Visible = false;
+            numMinute.Visible = false;
+            numSecond.Visible = false;
+            labelSetHours.Visible = false;
+            labelSetMinutes.Visible = false;
+            labelSetSeconds.Visible = false;
+        }
+
+        private void showUI()
+        {
+            numHour.Visible = true;
+            numMinute.Visible = true;
+            numSecond.Visible = true;
+            labelSetHours.Visible = true;
+            labelSetMinutes.Visible = true;
+            labelSetSeconds.Visible = true;
+        }
 
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             TimerStart();
+            hideUI();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -73,6 +94,7 @@ namespace ToolDeck
         {
             timer1.Stop();
             labelTimer.Text = "00:00:00";
+            showUI();
         }
     }
 }
