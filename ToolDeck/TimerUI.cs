@@ -38,7 +38,7 @@ namespace ToolDeck
 
         private void timerTick()
         {
-            if (remainingTime.TotalSeconds > 0)
+            if (remainingTime.TotalSeconds > 1)
             {
                 remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
                 labelTimer.Text = remainingTime.ToString(@"hh\:mm\:ss");
@@ -47,6 +47,7 @@ namespace ToolDeck
             {
                 timer1.Stop();
                 PlayAlarmSound();
+                labelTimer.Text = "00:00:00";
                 MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
