@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerUI));
             numHour = new NumericUpDown();
             numSecond = new NumericUpDown();
             numMinute = new NumericUpDown();
@@ -124,7 +123,6 @@
             // 
             btnStart.Anchor = AnchorStyles.None;
             btnStart.BackColor = Color.Transparent;
-            btnStart.BackgroundImage = (Image)resources.GetObject("btnStart.BackgroundImage");
             btnStart.BackgroundImageLayout = ImageLayout.Stretch;
             btnStart.Cursor = Cursors.Hand;
             btnStart.FlatAppearance.BorderSize = 0;
@@ -132,10 +130,13 @@
             btnStart.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnStart.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnStart.FlatStyle = FlatStyle.Flat;
+            btnStart.Font = new Font("Segoe UI", 14.25F);
+            btnStart.ForeColor = Color.White;
             btnStart.Location = new Point(306, 292);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(57, 55);
+            btnStart.Size = new Size(65, 55);
             btnStart.TabIndex = 7;
+            btnStart.Text = "Start";
             btnStart.UseVisualStyleBackColor = false;
             btnStart.Click += btnStart_Click;
             // 
@@ -143,7 +144,6 @@
             // 
             btnStop.Anchor = AnchorStyles.None;
             btnStop.BackColor = Color.Transparent;
-            btnStop.BackgroundImage = (Image)resources.GetObject("btnStop.BackgroundImage");
             btnStop.BackgroundImageLayout = ImageLayout.Stretch;
             btnStop.Cursor = Cursors.Hand;
             btnStop.FlatAppearance.BorderSize = 0;
@@ -151,10 +151,13 @@
             btnStop.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnStop.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnStop.FlatStyle = FlatStyle.Flat;
+            btnStop.Font = new Font("Segoe UI", 14.25F);
+            btnStop.ForeColor = Color.White;
             btnStop.Location = new Point(398, 287);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(67, 64);
             btnStop.TabIndex = 8;
+            btnStop.Text = "Stop";
             btnStop.UseVisualStyleBackColor = false;
             btnStop.Click += btnStop_Click;
             // 

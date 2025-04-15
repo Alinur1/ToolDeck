@@ -33,6 +33,8 @@ namespace ToolDeck
             {
                 labelTimer.Text = remainingTime.ToString(@"hh\:mm\:ss");
                 timer1.Start();
+                hideUI();
+                btnStart.Enabled = false;
             }
         }
 
@@ -49,6 +51,7 @@ namespace ToolDeck
                 PlayAlarmSound();
                 labelTimer.Text = "00:00:00";
                 showUI();
+                btnStart.Enabled = true;
                 MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -82,7 +85,6 @@ namespace ToolDeck
         private void btnStart_Click(object sender, EventArgs e)
         {
             TimerStart();
-            hideUI();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -95,6 +97,7 @@ namespace ToolDeck
             timer1.Stop();
             labelTimer.Text = "00:00:00";
             showUI();
+            btnStart.Enabled = true;
         }
     }
 }
