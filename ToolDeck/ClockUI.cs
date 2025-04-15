@@ -10,27 +10,13 @@ using System.Windows.Forms;
 
 namespace ToolDeck
 {
-    public partial class Clock : UserControl
+    public partial class ClockUI : UserControl
     {
-        public Clock()
+        public ClockUI()
         {
             InitializeComponent();
             ShowRandomAdvice();
         }
-
-        private void timerClock_Tick(object sender, EventArgs e)
-        {
-            labelDay.Text = DateTime.Now.ToString("dddd");
-            labelDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
-            labelTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
-            labelTimeZone.Text = "Time zone: " + DateTime.Now.ToString("UTC:K");
-        }
-
-        private void Clock_Load(object sender, EventArgs e)
-        {
-            timerClock.Start();
-        }
-
 
         private readonly string[] adviceList = new string[]
         {
@@ -63,6 +49,20 @@ namespace ToolDeck
             Random rand = new Random();
             int index = rand.Next(adviceList.Length);
             labelAdvice.Text = "Short advice: " + adviceList[index];
+        }
+
+
+        private void timerClock_Tick(object sender, EventArgs e)
+        {
+            labelDay.Text = DateTime.Now.ToString("dddd");
+            labelDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
+            labelTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            labelTimeZone.Text = "Time zone: " + DateTime.Now.ToString("UTC:K");
+        }
+
+        private void Clock_Load(object sender, EventArgs e)
+        {
+            timerClock.Start();
         }
     }
 }

@@ -127,6 +127,7 @@
             btnTimer.TabIndex = 1;
             btnTimer.Text = "Timer";
             btnTimer.UseVisualStyleBackColor = true;
+            btnTimer.Click += btnTimer_Click;
             // 
             // btnStopwatch
             // 

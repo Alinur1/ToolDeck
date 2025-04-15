@@ -1,6 +1,6 @@
 ﻿namespace ToolDeck
 {
-    partial class Clock
+    partial class ClockUI
     {
         /// <summary> 
         /// Required designer variable.

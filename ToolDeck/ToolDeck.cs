@@ -3,7 +3,8 @@ namespace ToolDeck
     public partial class ToolDeck : Form
     {
 
-        Clock clock = new Clock();
+        ClockUI clock = new ClockUI();
+        TimerUI timerUI = new TimerUI();
 
         public ToolDeck()
         {
@@ -22,6 +23,11 @@ namespace ToolDeck
         private void btnClock_Click(object sender, EventArgs e)
         {
             addClockUserControl(clock);
+        }
+
+        private void btnTimer_Click(object sender, EventArgs e)
+        {
+            addClockUserControl(timerUI);
         }
     }
 }
