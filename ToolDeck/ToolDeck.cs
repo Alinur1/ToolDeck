@@ -5,6 +5,7 @@ namespace ToolDeck
 
         ClockUI clock = new ClockUI();
         TimerUI timerUI = new TimerUI();
+        StopWatchUI stopWatchUI = new StopWatchUI();
 
         public ToolDeck()
         {
@@ -28,6 +29,11 @@ namespace ToolDeck
         private void btnTimer_Click(object sender, EventArgs e)
         {
             addClockUserControl(timerUI);
+        }
+
+        private void btnStopwatch_Click(object sender, EventArgs e)
+        {
+            addClockUserControl(stopWatchUI);
         }
     }
 }

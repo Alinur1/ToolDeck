@@ -144,6 +144,7 @@
             btnStopwatch.TabIndex = 2;
             btnStopwatch.Text = "Stopwatch";
             btnStopwatch.UseVisualStyleBackColor = true;
+            btnStopwatch.Click += btnStopwatch_Click;
             // 
             // tabPDFToolsPage
             // 
