@@ -55,11 +55,10 @@
             // 
             // labelAdvice
             // 
-            labelAdvice.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             labelAdvice.AutoSize = true;
             labelAdvice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelAdvice.ForeColor = Color.White;
-            labelAdvice.Location = new Point(14, 491);
+            labelAdvice.Location = new Point(14, 248);
             labelAdvice.Name = "labelAdvice";
             labelAdvice.Size = new Size(98, 21);
             labelAdvice.TabIndex = 1;
@@ -101,7 +100,7 @@
             labelTimeZone.TabIndex = 4;
             labelTimeZone.Text = "Time Zone";
             // 
-            // Clock
+            // ClockUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -111,7 +110,7 @@
             Controls.Add(labelTime);
             Controls.Add(labelAdvice);
             Controls.Add(labelDay);
-            Name = "Clock";
+            Name = "ClockUI";
             Size = new Size(807, 524);
             Load += Clock_Load;
             ResumeLayout(false);
