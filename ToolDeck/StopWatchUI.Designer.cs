@@ -39,7 +39,7 @@
             // 
             // lblTime
             // 
-            lblTime.Anchor = AnchorStyles.None;
+            lblTime.Anchor = AnchorStyles.Top;
             lblTime.AutoSize = true;
             lblTime.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTime.ForeColor = Color.White;
@@ -51,7 +51,7 @@
             // 
             // btnStartStop
             // 
-            btnStartStop.Anchor = AnchorStyles.None;
+            btnStartStop.Anchor = AnchorStyles.Top;
             btnStartStop.BackColor = Color.Transparent;
             btnStartStop.Cursor = Cursors.Hand;
             btnStartStop.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
@@ -70,7 +70,7 @@
             // 
             // btnLap
             // 
-            btnLap.Anchor = AnchorStyles.None;
+            btnLap.Anchor = AnchorStyles.Top;
             btnLap.BackColor = Color.Transparent;
             btnLap.Cursor = Cursors.Hand;
             btnLap.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
@@ -89,7 +89,7 @@
             // 
             // btnReset
             // 
-            btnReset.Anchor = AnchorStyles.None;
+            btnReset.Anchor = AnchorStyles.Top;
             btnReset.BackColor = Color.Transparent;
             btnReset.Cursor = Cursors.Hand;
             btnReset.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
@@ -108,7 +108,7 @@
             // 
             // lstLaps
             // 
-            lstLaps.Anchor = AnchorStyles.None;
+            lstLaps.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lstLaps.BackColor = Color.FromArgb(46, 46, 62);
             lstLaps.BorderStyle = BorderStyle.None;
             lstLaps.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -128,8 +128,7 @@
             // 
             // StopWatchUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(46, 46, 62);
             Controls.Add(lstLaps);
             Controls.Add(btnReset);
