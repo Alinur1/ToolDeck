@@ -37,6 +37,18 @@
             btnTimer = new Button();
             btnStopwatch = new Button();
             tabPDFToolsPage = new TabPage();
+            panelPDFTools = new Panel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            btnMergePDF = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            button4 = new Button();
+            button5 = new Button();
+            button6 = new Button();
+            button7 = new Button();
+            button8 = new Button();
+            button9 = new Button();
+            button10 = new Button();
             tabFileConversionPage = new TabPage();
             tabBarcodeScannerPage = new TabPage();
             tabDocScannerPage = new TabPage();
@@ -44,6 +56,8 @@
             tabToolDeck.SuspendLayout();
             tabClockPage.SuspendLayout();
             ClockTabBtnPanelContainer.SuspendLayout();
+            tabPDFToolsPage.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tabToolDeck
@@ -149,12 +163,203 @@
             // tabPDFToolsPage
             // 
             tabPDFToolsPage.BackColor = Color.FromArgb(102, 102, 105);
+            tabPDFToolsPage.Controls.Add(panelPDFTools);
+            tabPDFToolsPage.Controls.Add(flowLayoutPanel1);
             tabPDFToolsPage.Location = new Point(4, 26);
             tabPDFToolsPage.Name = "tabPDFToolsPage";
             tabPDFToolsPage.Padding = new Padding(3);
             tabPDFToolsPage.Size = new Size(1012, 530);
             tabPDFToolsPage.TabIndex = 1;
             tabPDFToolsPage.Text = "PDF Tools";
+            // 
+            // panelPDFTools
+            // 
+            panelPDFTools.BackColor = Color.FromArgb(46, 46, 62);
+            panelPDFTools.Dock = DockStyle.Fill;
+            panelPDFTools.Location = new Point(202, 3);
+            panelPDFTools.Name = "panelPDFTools";
+            panelPDFTools.Size = new Size(807, 524);
+            panelPDFTools.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.BackColor = Color.FromArgb(102, 102, 105);
+            flowLayoutPanel1.Controls.Add(btnMergePDF);
+            flowLayoutPanel1.Controls.Add(button2);
+            flowLayoutPanel1.Controls.Add(button3);
+            flowLayoutPanel1.Controls.Add(button4);
+            flowLayoutPanel1.Controls.Add(button5);
+            flowLayoutPanel1.Controls.Add(button6);
+            flowLayoutPanel1.Controls.Add(button7);
+            flowLayoutPanel1.Controls.Add(button8);
+            flowLayoutPanel1.Controls.Add(button9);
+            flowLayoutPanel1.Controls.Add(button10);
+            flowLayoutPanel1.Dock = DockStyle.Left;
+            flowLayoutPanel1.Location = new Point(3, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(199, 524);
+            flowLayoutPanel1.TabIndex = 0;
+            // 
+            // btnMergePDF
+            // 
+            btnMergePDF.Cursor = Cursors.Hand;
+            btnMergePDF.FlatAppearance.BorderColor = Color.White;
+            btnMergePDF.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnMergePDF.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnMergePDF.FlatStyle = FlatStyle.Flat;
+            btnMergePDF.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnMergePDF.ForeColor = Color.White;
+            btnMergePDF.Location = new Point(3, 3);
+            btnMergePDF.Name = "btnMergePDF";
+            btnMergePDF.Size = new Size(182, 45);
+            btnMergePDF.TabIndex = 0;
+            btnMergePDF.Text = "Merge PDF";
+            btnMergePDF.UseVisualStyleBackColor = true;
+            btnMergePDF.Click += btnMergePDF_Click;
+            // 
+            // button2
+            // 
+            button2.Cursor = Cursors.Hand;
+            button2.FlatAppearance.BorderColor = Color.White;
+            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button2.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(3, 54);
+            button2.Name = "button2";
+            button2.Size = new Size(182, 45);
+            button2.TabIndex = 1;
+            button2.Text = "Split PDF pages";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Cursor = Cursors.Hand;
+            button3.FlatAppearance.BorderColor = Color.White;
+            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button3.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.White;
+            button3.Location = new Point(3, 105);
+            button3.Name = "button3";
+            button3.Size = new Size(182, 45);
+            button3.TabIndex = 2;
+            button3.Text = "Compress PDF size";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Cursor = Cursors.Hand;
+            button4.FlatAppearance.BorderColor = Color.White;
+            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button4.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button4.ForeColor = Color.White;
+            button4.Location = new Point(3, 156);
+            button4.Name = "button4";
+            button4.Size = new Size(182, 45);
+            button4.TabIndex = 3;
+            button4.Text = "Protect PDF";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            button5.Cursor = Cursors.Hand;
+            button5.FlatAppearance.BorderColor = Color.White;
+            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button5.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button5.ForeColor = Color.White;
+            button5.Location = new Point(3, 207);
+            button5.Name = "button5";
+            button5.Size = new Size(182, 45);
+            button5.TabIndex = 4;
+            button5.Text = "Sort/reorder pages";
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            button6.Cursor = Cursors.Hand;
+            button6.FlatAppearance.BorderColor = Color.White;
+            button6.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button6.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button6.FlatStyle = FlatStyle.Flat;
+            button6.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button6.ForeColor = Color.White;
+            button6.Location = new Point(3, 258);
+            button6.Name = "button6";
+            button6.Size = new Size(182, 45);
+            button6.TabIndex = 5;
+            button6.Text = "Sign PDFs";
+            button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            button7.Cursor = Cursors.Hand;
+            button7.FlatAppearance.BorderColor = Color.White;
+            button7.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button7.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button7.FlatStyle = FlatStyle.Flat;
+            button7.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button7.ForeColor = Color.White;
+            button7.Location = new Point(3, 309);
+            button7.Name = "button7";
+            button7.Size = new Size(182, 45);
+            button7.TabIndex = 6;
+            button7.Text = "Freehand annotations";
+            button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            button8.Cursor = Cursors.Hand;
+            button8.FlatAppearance.BorderColor = Color.White;
+            button8.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button8.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button8.ForeColor = Color.White;
+            button8.Location = new Point(3, 360);
+            button8.Name = "button8";
+            button8.Size = new Size(182, 45);
+            button8.TabIndex = 7;
+            button8.Text = "Watermark";
+            button8.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            button9.Cursor = Cursors.Hand;
+            button9.FlatAppearance.BorderColor = Color.White;
+            button9.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button9.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button9.FlatStyle = FlatStyle.Flat;
+            button9.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button9.ForeColor = Color.White;
+            button9.Location = new Point(3, 411);
+            button9.Name = "button9";
+            button9.Size = new Size(182, 45);
+            button9.TabIndex = 8;
+            button9.Text = "Page numbers";
+            button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            button10.Cursor = Cursors.Hand;
+            button10.FlatAppearance.BorderColor = Color.White;
+            button10.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            button10.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button10.FlatStyle = FlatStyle.Flat;
+            button10.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button10.ForeColor = Color.White;
+            button10.Location = new Point(3, 462);
+            button10.Name = "button10";
+            button10.Size = new Size(182, 45);
+            button10.TabIndex = 9;
+            button10.Text = "Edit PDF";
+            button10.UseVisualStyleBackColor = true;
             // 
             // tabFileConversionPage
             // 
@@ -212,6 +417,8 @@
             tabToolDeck.ResumeLayout(false);
             tabClockPage.ResumeLayout(false);
             ClockTabBtnPanelContainer.ResumeLayout(false);
+            tabPDFToolsPage.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -229,5 +436,17 @@
         private Button btnTimer;
         private Button btnStopwatch;
         private Panel panelClock;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Button btnMergePDF;
+        private Button button2;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Button button6;
+        private Button button7;
+        private Button button8;
+        private Button button9;
+        private Button button10;
+        private Panel panelPDFTools;
     }
 }
