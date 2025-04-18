@@ -23,6 +23,16 @@ namespace ToolDeck
             InitializeComponent();
         }
 
+        private Image GetPdfThumbnail(string filePath, int width = 150, int height = 200)
+        {
+            using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
+            {
+                // Render first page as image
+                var img = pdfDoc.Render(0, width, height, true); // pageIndex = 0
+                return img;
+            }
+        }
+
         private void RenderPdfPreview()
         {
             panelPdfPreview.Controls.Clear();
@@ -31,38 +41,45 @@ namespace ToolDeck
             {
                 var panel = new Panel
                 {
-                    Width = 150,
-                    Height = 60,
+                    Width = 160,
+                    Height = 220,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(5),
                     Tag = item
                 };
 
+                var thumbnail = GetPdfThumbnail(item.FilePath); // use helper above
+
+                var picBox = new PictureBox
+                {
+                    Image = thumbnail,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Top,
+                    Height = 180
+                };
+
                 var lbl = new Label
                 {
                     Text = item.FileName,
-                    Dock = DockStyle.Fill,
-                    TextAlign = ContentAlignment.MiddleCenter
+                    Dock = DockStyle.Bottom,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    AutoEllipsis = true
                 };
 
+                panel.Controls.Add(picBox);
                 panel.Controls.Add(lbl);
-
-                // Optional: Make draggable for reordering
-                panel.MouseDown += Panel_MouseDown;
-                panel.AllowDrop = true;
-                panel.DragEnter += Panel_DragEnter;
-                panel.DragDrop += Panel_DragDrop;
 
                 panelPdfPreview.Controls.Add(panel);
             }
         }
+
 
         private void MergePdfFiles(List<string> inputFiles, string outputPath)
         {
             try
             {
                 using var writer = new PdfWriter(outputPath);
-                using var mergedPdf = new PdfDocument(writer);
+                using var mergedPdf = new iText.Kernel.Pdf.PdfDocument(writer);
                 var merger = new PdfMerger(mergedPdf);
 
                 foreach (var file in inputFiles)
@@ -70,7 +87,7 @@ namespace ToolDeck
                     try
                     {
                         var reader = new PdfReader(file);
-                        var pdf = new PdfDocument(reader);
+                        var pdf = new iText.Kernel.Pdf.PdfDocument(reader);
                         merger.Merge(pdf, 1, pdf.GetNumberOfPages());
                         pdf.Close();
                     }
@@ -196,7 +213,24 @@ namespace ToolDeck
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            foreach (Control control in panelPdfPreview.Controls)
+            {
+                if (control is Panel panel)
+                {
+                    foreach (Control inner in panel.Controls)
+                    {
+                        if (inner is PictureBox picBox && picBox.Image != null)
+                        {
+                            picBox.Image.Dispose();
+                            picBox.Image = null;
+                        }
+                    }
+                }
+            }
+
             panelPdfPreview.Controls.Clear();
+            _pdfItems.Clear();
+            GC.Collect(); // Optional: Force garbage collection
         }
 
 
