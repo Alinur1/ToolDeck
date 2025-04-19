@@ -41,21 +41,21 @@ namespace ToolDeck
             {
                 var panel = new Panel
                 {
-                    Width = 160,
-                    Height = 220,
+                    Width = 200,
+                    Height = 260,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(5),
-                    Tag = item
+                    Tag = item //syncing list order
                 };
 
-                var thumbnail = GetPdfThumbnail(item.FilePath); // use helper above
-
+                // Load thumbnail
+                var thumbnail = GetPdfThumbnail(item.FilePath);
                 var picBox = new PictureBox
                 {
                     Image = thumbnail,
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Dock = DockStyle.Top,
-                    Height = 180
+                    Height = 140
                 };
 
                 var lbl = new Label
@@ -69,10 +69,15 @@ namespace ToolDeck
                 panel.Controls.Add(picBox);
                 panel.Controls.Add(lbl);
 
+                //draggable pdf previews
+                panel.MouseDown += Panel_MouseDown;
+                panel.AllowDrop = true;
+                panel.DragEnter += Panel_DragEnter;
+                panel.DragDrop += Panel_DragDrop;
+
                 panelPdfPreview.Controls.Add(panel);
             }
         }
-
 
         private void MergePdfFiles(List<string> inputFiles, string outputPath)
         {
@@ -105,6 +110,8 @@ namespace ToolDeck
         }
 
 
+
+        //UI Related codes
 
         private void btnSelectFiles_Click(object sender, EventArgs e)
         {
@@ -168,19 +175,24 @@ namespace ToolDeck
 
         private void Panel_DragDrop(object sender, DragEventArgs e)
         {
-            var target = sender as Control;
-            if (_draggedPanel != null && target != null && target != _draggedPanel)
+            var targetPanel = sender as Control;
+            if (_draggedPanel == null || targetPanel == null || _draggedPanel == targetPanel)
+                return;
+
+            int fromIndex = panelPdfPreview.Controls.GetChildIndex(_draggedPanel);
+            int toIndex = panelPdfPreview.Controls.GetChildIndex(targetPanel);
+
+            panelPdfPreview.Controls.SetChildIndex(_draggedPanel, toIndex);
+
+            //Sync _pdfItems list order
+            var movedItem = _draggedPanel.Tag as PdfItem;
+            if (movedItem != null)
             {
-                int sourceIndex = panelPdfPreview.Controls.GetChildIndex(_draggedPanel);
-                int targetIndex = panelPdfPreview.Controls.GetChildIndex(target);
-
-                panelPdfPreview.Controls.SetChildIndex(_draggedPanel, targetIndex);
-
-                // Reorder _pdfItems accordingly
-                var movedItem = _pdfItems[sourceIndex];
-                _pdfItems.RemoveAt(sourceIndex);
-                _pdfItems.Insert(targetIndex, movedItem);
+                _pdfItems.RemoveAt(fromIndex);
+                _pdfItems.Insert(toIndex, movedItem);
             }
+
+            _draggedPanel = null;
         }
 
         private void btnSaveMerged_Click(object sender, EventArgs e)
