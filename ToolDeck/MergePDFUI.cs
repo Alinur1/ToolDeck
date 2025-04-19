@@ -23,7 +23,7 @@ namespace ToolDeck
             InitializeComponent();
         }
 
-        private Image GetPdfThumbnail(string filePath, int width = 150, int height = 200)
+        private Image GetPdfThumbnail(string filePath, int width = 190, int height = 240)
         {
             using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
             {
@@ -41,21 +41,19 @@ namespace ToolDeck
             {
                 var panel = new Panel
                 {
-                    Width = 200,
-                    Height = 260,
+                    Width = 240,
+                    Height = 300,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(5),
-                    Tag = item //syncing list order
+                    Tag = item
                 };
 
-                // Load thumbnail
-                var thumbnail = GetPdfThumbnail(item.FilePath);
                 var picBox = new PictureBox
                 {
-                    Image = thumbnail,
+                    Image = GetPdfThumbnail(item.FilePath),
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Dock = DockStyle.Top,
-                    Height = 140
+                    Height = 190
                 };
 
                 var lbl = new Label
@@ -66,10 +64,30 @@ namespace ToolDeck
                     AutoEllipsis = true
                 };
 
+                // Add context menu
+                var contextMenu = new ContextMenuStrip();
+                var removeItem = new ToolStripMenuItem("Remove");
+                removeItem.Click += (s, e) =>
+                {
+                    // On remove clicked
+                    panelPdfPreview.Controls.Remove(panel);
+                    _pdfItems.Remove(item);
+
+                    if (picBox.Image != null)
+                    {
+                        picBox.Image.Dispose();
+                        picBox.Image = null;
+                    }
+
+                    panel.Dispose();
+                };
+
+                contextMenu.Items.Add(removeItem);
+                panel.ContextMenuStrip = contextMenu;
+
+                // Add controls and events
                 panel.Controls.Add(picBox);
                 panel.Controls.Add(lbl);
-
-                //draggable pdf previews
                 panel.MouseDown += Panel_MouseDown;
                 panel.AllowDrop = true;
                 panel.DragEnter += Panel_DragEnter;
@@ -78,6 +96,7 @@ namespace ToolDeck
                 panelPdfPreview.Controls.Add(panel);
             }
         }
+
 
         private void MergePdfFiles(List<string> inputFiles, string outputPath)
         {
