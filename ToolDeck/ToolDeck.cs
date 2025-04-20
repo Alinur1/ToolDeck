@@ -7,6 +7,7 @@ namespace ToolDeck
         TimerUI timerUI = new TimerUI();
         StopWatchUI stopWatchUI = new StopWatchUI();
         MergePDF mergePDFUI = new MergePDF();
+        SplitPDFUI splitPDFUI = new SplitPDFUI();
 
         public ToolDeck()
         {
@@ -49,6 +50,11 @@ namespace ToolDeck
         private void btnMergePDF_Click(object sender, EventArgs e)
         {
             addPDFToolsUserControl(mergePDFUI);
+        }
+
+        private void btnSplitPDF_Click(object sender, EventArgs e)
+        {
+            addPDFToolsUserControl(splitPDFUI);
         }
     }
 }

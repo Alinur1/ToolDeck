@@ -40,7 +40,7 @@
             panelPDFTools = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnMergePDF = new Button();
-            button2 = new Button();
+            btnSplitPDF = new Button();
             button3 = new Button();
             button4 = new Button();
             button5 = new Button();
@@ -185,7 +185,7 @@
             // 
             flowLayoutPanel1.BackColor = Color.FromArgb(102, 102, 105);
             flowLayoutPanel1.Controls.Add(btnMergePDF);
-            flowLayoutPanel1.Controls.Add(button2);
+            flowLayoutPanel1.Controls.Add(btnSplitPDF);
             flowLayoutPanel1.Controls.Add(button3);
             flowLayoutPanel1.Controls.Add(button4);
             flowLayoutPanel1.Controls.Add(button5);
@@ -217,21 +217,22 @@
             btnMergePDF.UseVisualStyleBackColor = true;
             btnMergePDF.Click += btnMergePDF_Click;
             // 
-            // button2
+            // btnSplitPDF
             // 
-            button2.Cursor = Cursors.Hand;
-            button2.FlatAppearance.BorderColor = Color.White;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button2.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(3, 54);
-            button2.Name = "button2";
-            button2.Size = new Size(182, 45);
-            button2.TabIndex = 1;
-            button2.Text = "Split PDF pages";
-            button2.UseVisualStyleBackColor = true;
+            btnSplitPDF.Cursor = Cursors.Hand;
+            btnSplitPDF.FlatAppearance.BorderColor = Color.White;
+            btnSplitPDF.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnSplitPDF.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnSplitPDF.FlatStyle = FlatStyle.Flat;
+            btnSplitPDF.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSplitPDF.ForeColor = Color.White;
+            btnSplitPDF.Location = new Point(3, 54);
+            btnSplitPDF.Name = "btnSplitPDF";
+            btnSplitPDF.Size = new Size(182, 45);
+            btnSplitPDF.TabIndex = 1;
+            btnSplitPDF.Text = "Split PDF pages";
+            btnSplitPDF.UseVisualStyleBackColor = true;
+            btnSplitPDF.Click += btnSplitPDF_Click;
             // 
             // button3
             // 
@@ -438,7 +439,7 @@
         private Panel panelClock;
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnMergePDF;
-        private Button button2;
+        private Button btnSplitPDF;
         private Button button3;
         private Button button4;
         private Button button5;
