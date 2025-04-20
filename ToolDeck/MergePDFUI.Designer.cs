@@ -49,7 +49,7 @@
             btnSelectFiles.Location = new Point(122, 33);
             btnSelectFiles.Name = "btnSelectFiles";
             btnSelectFiles.Size = new Size(126, 52);
-            btnSelectFiles.TabIndex = 9;
+            btnSelectFiles.TabIndex = 0;
             btnSelectFiles.Text = "Select Files";
             btnSelectFiles.UseVisualStyleBackColor = false;
             btnSelectFiles.Click += btnSelectFiles_Click;
@@ -68,7 +68,7 @@
             btnSaveMerged.Location = new Point(325, 33);
             btnSaveMerged.Name = "btnSaveMerged";
             btnSaveMerged.Size = new Size(126, 52);
-            btnSaveMerged.TabIndex = 10;
+            btnSaveMerged.TabIndex = 1;
             btnSaveMerged.Text = "Save";
             btnSaveMerged.UseVisualStyleBackColor = false;
             btnSaveMerged.Click += btnSaveMerged_Click;
@@ -82,7 +82,7 @@
             lblOrDragDrop.Location = new Point(287, 96);
             lblOrDragDrop.Name = "lblOrDragDrop";
             lblOrDragDrop.Size = new Size(212, 21);
-            lblOrDragDrop.TabIndex = 11;
+            lblOrDragDrop.TabIndex = 3;
             lblOrDragDrop.Text = "Drag and drop PDFs below";
             // 
             // panelPdfPreview
@@ -96,7 +96,7 @@
             panelPdfPreview.Location = new Point(16, 120);
             panelPdfPreview.Name = "panelPdfPreview";
             panelPdfPreview.Size = new Size(776, 388);
-            panelPdfPreview.TabIndex = 12;
+            panelPdfPreview.TabIndex = 4;
             panelPdfPreview.DragDrop += pnlPdfPreview_DragDrop;
             panelPdfPreview.DragEnter += pnlPdfPreview_DragEnter;
             // 
@@ -114,7 +114,7 @@
             btnClear.Location = new Point(532, 33);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(126, 52);
-            btnClear.TabIndex = 13;
+            btnClear.TabIndex = 2;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
