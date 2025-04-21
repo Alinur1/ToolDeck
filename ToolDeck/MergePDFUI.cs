@@ -28,7 +28,7 @@ namespace ToolDeck
             using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
             {
                 // Render first page as image
-                var img = pdfDoc.Render(0, width, height, true); // pageIndex = 0
+                var img = pdfDoc.Render(0, width, height, true);
                 return img;
             }
         }
@@ -97,7 +97,6 @@ namespace ToolDeck
             }
         }
 
-
         private void MergePdfFiles(List<string> inputFiles, string outputPath)
         {
             try
@@ -128,11 +127,7 @@ namespace ToolDeck
             }
         }
 
-
-
-        //UI Related codes
-
-        private void btnSelectFiles_Click(object sender, EventArgs e)
+        private void SelectFiles()
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -152,6 +147,77 @@ namespace ToolDeck
                     RenderPdfPreview();
                 }
             }
+        }
+
+        private void SaveMergedFiles()
+        {
+            if (_pdfItems.Count < 2)
+            {
+                MessageBox.Show("Please add at least two PDF files to merge.", "Warning");
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
+                sfd.Title = "Save Merged PDF";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        MergePdfFiles(_pdfItems.Select(p => p.FilePath).ToList(), sfd.FileName);
+                        MessageBox.Show("Merged PDF saved successfully!", "Success");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error while merging PDF: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void ClearAll()
+        {
+            foreach (Control control in panelPdfPreview.Controls)
+            {
+                if (control is Panel panel)
+                {
+                    foreach (Control inner in panel.Controls)
+                    {
+                        if (inner is PictureBox picBox && picBox.Image != null)
+                        {
+                            picBox.Image.Dispose();
+                            picBox.Image = null;
+                        }
+                    }
+                }
+            }
+
+            panelPdfPreview.Controls.Clear();
+            _pdfItems.Clear();
+            GC.Collect(); // Optional: Force garbage collection
+        }
+
+
+
+
+
+        //UI Related codes
+
+        private void btnSelectFiles_Click(object sender, EventArgs e)
+        {
+            SelectFiles();
+        }
+
+        private void btnSaveMerged_Click(object sender, EventArgs e)
+        {
+            SaveMergedFiles();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearAll();
         }
 
         private void pnlPdfPreview_DragEnter(object sender, DragEventArgs e)
@@ -213,59 +279,9 @@ namespace ToolDeck
 
             _draggedPanel = null;
         }
-
-        private void btnSaveMerged_Click(object sender, EventArgs e)
-        {
-            if (_pdfItems.Count < 2)
-            {
-                MessageBox.Show("Please add at least two PDF files to merge.", "Warning");
-                return;
-            }
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
-                sfd.Title = "Save Merged PDF";
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        MergePdfFiles(_pdfItems.Select(p => p.FilePath).ToList(), sfd.FileName);
-                        MessageBox.Show("Merged PDF saved successfully!", "Success");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error while merging PDF: " + ex.Message);
-                    }
-                }
-            }
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            foreach (Control control in panelPdfPreview.Controls)
-            {
-                if (control is Panel panel)
-                {
-                    foreach (Control inner in panel.Controls)
-                    {
-                        if (inner is PictureBox picBox && picBox.Image != null)
-                        {
-                            picBox.Image.Dispose();
-                            picBox.Image = null;
-                        }
-                    }
-                }
-            }
-
-            panelPdfPreview.Controls.Clear();
-            _pdfItems.Clear();
-            GC.Collect(); // Optional: Force garbage collection
-        }
-
-
     }
+
+
 
     public class PdfItem
     {

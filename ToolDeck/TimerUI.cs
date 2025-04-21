@@ -108,6 +108,10 @@ namespace ToolDeck
         }
 
 
+
+
+        // UI related code
+
         private void btnStart_Click(object sender, EventArgs e)
         {
             blankCheck();

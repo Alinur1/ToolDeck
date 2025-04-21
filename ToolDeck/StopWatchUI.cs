@@ -38,12 +38,6 @@ namespace ToolDeck
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            TimeSpan ts = stopwatch.Elapsed;
-            lblTime.Text = ts.ToString(@"hh\:mm\:ss\.ff");
-        }
-
         private void LapStatus()
         {
             if (stopwatch.IsRunning)
@@ -72,6 +66,8 @@ namespace ToolDeck
 
 
 
+        //UI related code
+
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             StopWatchStartStop();
@@ -80,6 +76,12 @@ namespace ToolDeck
         private void btnLap_Click(object sender, EventArgs e)
         {
             LapStatus();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TimeSpan ts = stopwatch.Elapsed;
+            lblTime.Text = ts.ToString(@"hh\:mm\:ss\.ff");
         }
 
         private void btnReset_Click(object sender, EventArgs e)

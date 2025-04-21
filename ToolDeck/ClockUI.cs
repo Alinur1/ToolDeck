@@ -52,6 +52,9 @@ namespace ToolDeck
         }
 
 
+
+        // UI related code
+
         private void timerClock_Tick(object sender, EventArgs e)
         {
             labelDay.Text = DateTime.Now.ToString("dddd");
