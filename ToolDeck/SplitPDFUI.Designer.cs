@@ -34,6 +34,7 @@
             btnSplitSave = new Button();
             panelPagePreview = new FlowLayoutPanel();
             label1 = new Label();
+            btnClear = new Button();
             SuspendLayout();
             // 
             // btnSelectFile
@@ -117,10 +118,30 @@
             label1.TabIndex = 5;
             label1.Text = "Input: 1-2,5-6 → should create two PDFs\r\nInput: 4,7,9 → should create three one-pagers\r\nInput: 3-100 on a 10-page PDF → only goes to 10 safely";
             // 
+            // btnClear
+            // 
+            btnClear.Anchor = AnchorStyles.Top;
+            btnClear.BackColor = Color.Transparent;
+            btnClear.Cursor = Cursors.Hand;
+            btnClear.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
+            btnClear.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnClear.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnClear.ForeColor = Color.White;
+            btnClear.Location = new Point(597, 133);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(126, 52);
+            btnClear.TabIndex = 6;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += btnClear_Click;
+            // 
             // SplitPDFUI
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(46, 46, 62);
+            Controls.Add(btnClear);
             Controls.Add(label1);
             Controls.Add(panelPagePreview);
             Controls.Add(btnSplitSave);
@@ -141,5 +162,6 @@
         private Button btnSplitSave;
         private FlowLayoutPanel panelPagePreview;
         private Label label1;
+        private Button btnClear;
     }
 }

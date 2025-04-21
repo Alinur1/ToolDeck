@@ -163,6 +163,35 @@ namespace ToolDeck
             }
         }
 
+        private void ClearAll()
+        {
+            // Dispose of controls and images inside the panel to free memory
+            foreach (Control ctrl in panelPagePreview.Controls)
+            {
+                if (ctrl is Panel pnl)
+                {
+                    foreach (Control innerCtrl in pnl.Controls)
+                    {
+                        if (innerCtrl is PictureBox pb && pb.Image != null)
+                        {
+                            pb.Image.Dispose();
+                            pb.Image = null;
+                        }
+                    }
+
+                    pnl.Dispose();
+                }
+            }
+
+            panelPagePreview.Controls.Clear();
+            txtPageRanges.Clear();
+
+            // Force garbage collection
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            MessageBox.Show("Cleared successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
 
 
@@ -177,6 +206,11 @@ namespace ToolDeck
         private void btnSplitSave_Click(object sender, EventArgs e)
         {
             SaveSplittedPDFFile();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearAll();
         }
     }
 }
