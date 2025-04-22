@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ToolDeck.Logger;
 
 namespace ToolDeck
 {
@@ -24,44 +25,65 @@ namespace ToolDeck
 
         private void StopWatchStartStop()
         {
-            if (!stopwatch.IsRunning)
+            try
             {
-                stopwatch.Start();
-                timer1.Start();
-                btnStartStop.Text = "Stop";
+                if (!stopwatch.IsRunning)
+                {
+                    stopwatch.Start();
+                    timer1.Start();
+                    btnStartStop.Text = "Stop";
+                }
+                else
+                {
+                    stopwatch.Stop();
+                    timer1.Stop();
+                    btnStartStop.Text = "Start";
+                }
             }
-            else
+            catch(Exception ex)
             {
-                stopwatch.Stop();
-                timer1.Stop();
-                btnStartStop.Text = "Start";
+                LogError("An error occurred at StopWatchUI in StopWatchStartStop: ", ex);
             }
         }
 
         private void LapStatus()
         {
-            if (stopwatch.IsRunning)
+            try
             {
-                TimeSpan currentTime = stopwatch.Elapsed;
-                TimeSpan lapDuration = currentTime - lastLapTime;
-                lastLapTime = currentTime;
+                if (stopwatch.IsRunning)
+                {
+                    TimeSpan currentTime = stopwatch.Elapsed;
+                    TimeSpan lapDuration = currentTime - lastLapTime;
+                    lastLapTime = currentTime;
 
-                string lapText = $"Lap {lstLaps.Items.Count + 1}: " +
-                 currentTime.ToString(@"hh\:mm\:ss\.ff") +
-                 $" (+{lapDuration.ToString(@"hh\:mm\:ss\.ff")})";
+                    string lapText = $"Lap {lstLaps.Items.Count + 1}: " +
+                     currentTime.ToString(@"hh\:mm\:ss\.ff") +
+                     $" (+{lapDuration.ToString(@"hh\:mm\:ss\.ff")})";
 
-                lstLaps.Items.Insert(0, lapText);
+                    lstLaps.Items.Insert(0, lapText);
+                }
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at StopWatchUI in LapStatus: ", ex);
             }
         }
 
         private void ResetStopWatch()
         {
-            stopwatch.Reset();
-            timer1.Stop();
-            lblTime.Text = "00:00:00.00";
-            lstLaps.Items.Clear();
-            lastLapTime = TimeSpan.Zero;
-            btnStartStop.Text = "Start/Stop";
+            try
+            {
+                stopwatch.Reset();
+                timer1.Stop();
+                lblTime.Text = "00:00:00.00";
+                lstLaps.Items.Clear();
+                lastLapTime = TimeSpan.Zero;
+                btnStartStop.Text = "Start/Stop";
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at StopWatchUI in ResetStopWatch: ", ex);
+            }
         }
 
 

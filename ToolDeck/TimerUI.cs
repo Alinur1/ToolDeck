@@ -8,6 +8,7 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ToolDeck.Logger;
 
 namespace ToolDeck
 {
@@ -28,38 +29,59 @@ namespace ToolDeck
             int minute = (int)numMinute.Value;
             int second = (int)numSecond.Value;
 
-            remainingTime = new TimeSpan(day, hour, minute, second);
-
-            if (remainingTime.TotalSeconds > 0)
+            try
             {
-                labelTimer.Text = remainingTime.ToString(@"dd\:hh\:mm\:ss");
-                timer1.Start();
-                hideUI();
-                btnStart.Enabled = false;
+                remainingTime = new TimeSpan(day, hour, minute, second);
+
+                if (remainingTime.TotalSeconds > 0)
+                {
+                    labelTimer.Text = remainingTime.ToString(@"dd\:hh\:mm\:ss");
+                    timer1.Start();
+                    hideUI();
+                    btnStart.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at TimerUI in TimerStart: ", ex);
             }
         }
 
         private void timerTick()
         {
-            if (remainingTime.TotalSeconds > 1)
+            try
             {
-                remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
-                labelTimer.Text = remainingTime.ToString(@"dd\:hh\:mm\:ss");
+                if (remainingTime.TotalSeconds > 1)
+                {
+                    remainingTime = remainingTime.Subtract(TimeSpan.FromSeconds(1));
+                    labelTimer.Text = remainingTime.ToString(@"dd\:hh\:mm\:ss");
+                }
+                else
+                {
+                    timer1.Stop();
+                    PlayAlarmSound();
+                    labelTimer.Text = "00:00:00:00";
+                    showUI();
+                    btnStart.Enabled = true;
+                    MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                timer1.Stop();
-                PlayAlarmSound();
-                labelTimer.Text = "00:00:00:00";
-                showUI();
-                btnStart.Enabled = true;
-                MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LogError("An error occurred at TimerUI in timerTick: ", ex);
             }
         }
 
         private void PlayAlarmSound()
         {
-            SystemSounds.Exclamation.Play();
+            try
+            {
+                SystemSounds.Exclamation.Play();
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at TimerUI in PlayAlarmSound: ", ex);
+            }
         }
 
         private void hideUI()
@@ -88,23 +110,30 @@ namespace ToolDeck
 
         private void blankCheck()
         {
-            if(string.IsNullOrWhiteSpace(numDay.Text))
+            try
             {
-                numDay.Value = 0;
+                if (string.IsNullOrWhiteSpace(numDay.Text))
+                {
+                    numDay.Value = 0;
+                }
+                else if (string.IsNullOrWhiteSpace(numHour.Text))
+                {
+                    numHour.Value = 0;
+                }
+                else if (string.IsNullOrWhiteSpace(numMinute.Text))
+                {
+                    numMinute.Value = 0;
+                }
+                else if (string.IsNullOrWhiteSpace(numSecond.Text))
+                {
+                    numSecond.Value = 0;
+                }
+                TimerStart();
             }
-            else if(string.IsNullOrWhiteSpace(numHour.Text))
+            catch (Exception ex)
             {
-                numHour.Value = 0;
+                LogError("An error occurred at TimerUI in blankCheck: ", ex);
             }
-            else if(string.IsNullOrWhiteSpace(numMinute.Text))
-            {
-                numMinute.Value = 0;
-            }
-            else if(string.IsNullOrWhiteSpace(numSecond.Text))
-            {
-                numSecond.Value = 0;
-            }
-            TimerStart();
         }
 
 

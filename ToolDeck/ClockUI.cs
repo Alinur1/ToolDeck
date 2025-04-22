@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ToolDeck.Logger;
 
 namespace ToolDeck
 {
@@ -46,9 +47,16 @@ namespace ToolDeck
 
         private void ShowRandomAdvice()
         {
-            Random rand = new Random();
-            int index = rand.Next(adviceList.Length);
-            labelAdvice.Text = "Short advice: " + adviceList[index];
+            try
+            {
+                Random rand = new Random();
+                int index = rand.Next(adviceList.Length);
+                labelAdvice.Text = "Short advice: " + adviceList[index];
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at ClockUI in ShowRandomAdvice: ", ex);
+            }
         }
 
 
@@ -57,10 +65,17 @@ namespace ToolDeck
 
         private void timerClock_Tick(object sender, EventArgs e)
         {
-            labelDay.Text = DateTime.Now.ToString("dddd");
-            labelDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
-            labelTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
-            labelTimeZone.Text = "Time zone: " + DateTime.Now.ToString("UTC:K");
+            try
+            {
+                labelDay.Text = DateTime.Now.ToString("dddd");
+                labelDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
+                labelTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
+                labelTimeZone.Text = "Time zone: " + DateTime.Now.ToString("UTC:K");
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at ClockUI in timerClock_Tick: ", ex);
+            }
         }
 
         private void Clock_Load(object sender, EventArgs e)

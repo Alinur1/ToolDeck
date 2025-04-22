@@ -6,10 +6,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ToolDeck.Logger;
 
 namespace ToolDeck
 {
@@ -25,75 +27,90 @@ namespace ToolDeck
 
         private Image GetPdfThumbnail(string filePath, int width = 190, int height = 240)
         {
-            using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
+            try
             {
-                // Render first page as image
-                var img = pdfDoc.Render(0, width, height, true);
-                return img;
+                using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
+                {
+                    // Render first page as image
+                    var img = pdfDoc.Render(0, width, height, true);
+                    return img;
+                }
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergePDFUI in GetPdfThumbnail: ", ex);
+                return null;
             }
         }
 
         private void RenderPdfPreview()
         {
-            panelPdfPreview.Controls.Clear();
-
-            foreach (var item in _pdfItems)
+            try
             {
-                var panel = new Panel
-                {
-                    Width = 240,
-                    Height = 300,
-                    BorderStyle = BorderStyle.FixedSingle,
-                    Margin = new Padding(5),
-                    Tag = item
-                };
+                panelPdfPreview.Controls.Clear();
 
-                var picBox = new PictureBox
+                foreach (var item in _pdfItems)
                 {
-                    Image = GetPdfThumbnail(item.FilePath),
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Dock = DockStyle.Top,
-                    Height = 190
-                };
-
-                var lbl = new Label
-                {
-                    Text = item.FileName,
-                    Dock = DockStyle.Bottom,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    AutoEllipsis = true
-                };
-
-                // Add context menu
-                var contextMenu = new ContextMenuStrip();
-                var removeItem = new ToolStripMenuItem("Remove");
-                removeItem.Click += (s, e) =>
-                {
-                    // On remove clicked
-                    panelPdfPreview.Controls.Remove(panel);
-                    _pdfItems.Remove(item);
-
-                    if (picBox.Image != null)
+                    var panel = new Panel
                     {
-                        picBox.Image.Dispose();
-                        picBox.Image = null;
-                    }
+                        Width = 240,
+                        Height = 300,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Margin = new Padding(5),
+                        Tag = item
+                    };
 
-                    panel.Dispose();
-                };
+                    var picBox = new PictureBox
+                    {
+                        Image = GetPdfThumbnail(item.FilePath),
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Dock = DockStyle.Top,
+                        Height = 190
+                    };
 
-                contextMenu.Items.Add(removeItem);
-                panel.ContextMenuStrip = contextMenu;
+                    var lbl = new Label
+                    {
+                        Text = item.FileName,
+                        Dock = DockStyle.Bottom,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        AutoEllipsis = true
+                    };
 
-                // Add controls and events
-                panel.Controls.Add(picBox);
-                panel.Controls.Add(lbl);
-                panel.MouseDown += Panel_MouseDown;
-                panel.AllowDrop = true;
-                panel.DragEnter += Panel_DragEnter;
-                panel.DragDrop += Panel_DragDrop;
+                    // Add context menu
+                    var contextMenu = new ContextMenuStrip();
+                    var removeItem = new ToolStripMenuItem("Remove");
+                    removeItem.Click += (s, e) =>
+                    {
+                        // On remove clicked
+                        panelPdfPreview.Controls.Remove(panel);
+                        _pdfItems.Remove(item);
 
-                panelPdfPreview.Controls.Add(panel);
+                        if (picBox.Image != null)
+                        {
+                            picBox.Image.Dispose();
+                            picBox.Image = null;
+                        }
+
+                        panel.Dispose();
+                    };
+
+                    contextMenu.Items.Add(removeItem);
+                    panel.ContextMenuStrip = contextMenu;
+
+                    // Add controls and events
+                    panel.Controls.Add(picBox);
+                    panel.Controls.Add(lbl);
+                    panel.MouseDown += Panel_MouseDown;
+                    panel.AllowDrop = true;
+                    panel.DragEnter += Panel_DragEnter;
+                    panel.DragDrop += Panel_DragDrop;
+
+                    panelPdfPreview.Controls.Add(panel);
+                }
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergePDFUI in RenderPdfPreview: ", ex);
             }
         }
 
@@ -116,87 +133,130 @@ namespace ToolDeck
                     }
                     catch (Exception innerEx)
                     {
-                        MessageBox.Show($"Error merging file:\n{file}\n\n{innerEx.Message}", "File Merge Error");
+                        MessageBox.Show($"Error merging file:\n{file}\n\n{innerEx.Message}", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred in MergePdfFiles: " + ex.Message);
+                LogError("An error occurred at MergePDFUI in MergePdfFiles: ", ex);
             }
         }
 
         private void SelectFiles()
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            try
             {
-                ofd.Multiselect = true;
-                ofd.Filter = "PDF Files (*.pdf)|*.pdf";
-
-                if (ofd.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog ofd = new OpenFileDialog())
                 {
-                    foreach (string file in ofd.FileNames)
-                    {
-                        if (!_pdfItems.Any(p => p.FilePath == file))
-                        {
-                            _pdfItems.Add(new PdfItem { FilePath = file });
-                        }
-                    }
+                    ofd.Multiselect = true;
+                    ofd.Filter = "PDF Files (*.pdf)|*.pdf";
 
-                    RenderPdfPreview();
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        foreach (string file in ofd.FileNames)
+                        {
+                            try
+                            {
+                                if (!_pdfItems.Any(p => p.FilePath == file))
+                                {
+                                    _pdfItems.Add(new PdfItem { FilePath = file });
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                LogError("An error occurred at MergePDFUI in SelectFiles#1: ", ex);
+                            }
+                        }
+
+                        RenderPdfPreview();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at MergePDFUI in SelectFiles#2: ", ex);
             }
         }
 
         private void SaveMergedFiles()
         {
-            if (_pdfItems.Count < 2)
+            try
             {
-                MessageBox.Show("Please add at least two PDF files to merge.", "Warning");
-                return;
-            }
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
-                sfd.Title = "Save Merged PDF";
-
-                if (sfd.ShowDialog() == DialogResult.OK)
+                if (_pdfItems.Count < 2)
                 {
-                    try
+                    MessageBox.Show("Please add at least two PDF files to merge.", "Warning");
+                    return;
+                }
+
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "PDF Files (*.pdf)|*.pdf";
+                    sfd.Title = "Save Merged PDF";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
                     {
-                        MergePdfFiles(_pdfItems.Select(p => p.FilePath).ToList(), sfd.FileName);
-                        MessageBox.Show("Merged PDF saved successfully!", "Success");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error while merging PDF: " + ex.Message);
+                        try
+                        {
+                            MergePdfFiles(_pdfItems.Select(p => p.FilePath).ToList(), sfd.FileName);
+                            MessageBox.Show("Merged PDF saved successfully!", "Success");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("PDF didn't merge due to an error.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LogError("An error occurred at MergerPDFUI in SaveMergedFiles#1: ", ex);
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in SaveMergedFiles#2: ", ex);
             }
         }
 
         private void ClearAll()
         {
-            foreach (Control control in panelPdfPreview.Controls)
+            try
             {
-                if (control is Panel panel)
+                foreach (Control control in panelPdfPreview.Controls)
                 {
-                    foreach (Control inner in panel.Controls)
+                    try
                     {
-                        if (inner is PictureBox picBox && picBox.Image != null)
+                        if (control is Panel panel)
                         {
-                            picBox.Image.Dispose();
-                            picBox.Image = null;
+                            try
+                            {
+                                foreach (Control inner in panel.Controls)
+                                {
+                                    if (inner is PictureBox picBox && picBox.Image != null)
+                                    {
+                                        picBox.Image.Dispose();
+                                        picBox.Image = null;
+                                    }
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                LogError("An error occurred at MergerPDFUI in ClearAll#1: ", ex);
+                            }
                         }
                     }
+                    catch(Exception ex)
+                    {
+                        LogError("An error occurred at MergerPDFUI in ClearAll#2: ", ex);
+                    }
                 }
-            }
 
-            panelPdfPreview.Controls.Clear();
-            _pdfItems.Clear();
-            GC.Collect(); // Optional: Force garbage collection
+                panelPdfPreview.Controls.Clear();
+                _pdfItems.Clear();
+                GC.Collect(); // Optional: Force garbage collection
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in ClearAll#3: ", ex);
+            }
         }
 
 
@@ -222,62 +282,97 @@ namespace ToolDeck
 
         private void pnlPdfPreview_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            try
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Any(f => Path.GetExtension(f).ToLower() == ".pdf"))
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    e.Effect = DragDropEffects.Copy;
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    if (files.Any(f => Path.GetExtension(f).ToLower() == ".pdf"))
+                    {
+                        e.Effect = DragDropEffects.Copy;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at MergePDFUI in pnlPdfPreview_DragEnter: ", ex);
             }
         }
 
         private void pnlPdfPreview_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
+            try
             {
-                if (Path.GetExtension(file).ToLower() == ".pdf" && !_pdfItems.Any(p => p.FilePath == file))
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
                 {
-                    _pdfItems.Add(new PdfItem { FilePath = file });
+                    if (Path.GetExtension(file).ToLower() == ".pdf" && !_pdfItems.Any(p => p.FilePath == file))
+                    {
+                        _pdfItems.Add(new PdfItem { FilePath = file });
+                    }
                 }
-            }
 
-            RenderPdfPreview();
+                RenderPdfPreview();
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in pnlPdfPreview_DragDrop: ", ex);
+            }
         }
 
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
-            _draggedPanel = sender as Control;
-            if (_draggedPanel != null)
-                _draggedPanel.DoDragDrop(_draggedPanel, DragDropEffects.Move);
+            try
+            {
+                _draggedPanel = sender as Control;
+                if (_draggedPanel != null)
+                    _draggedPanel.DoDragDrop(_draggedPanel, DragDropEffects.Move);
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in Panel_MouseDown: ", ex);
+            }
         }
 
         private void Panel_DragEnter(object sender, DragEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            try
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in Panel_DragEnter: ", ex);
+            }
         }
 
         private void Panel_DragDrop(object sender, DragEventArgs e)
         {
-            var targetPanel = sender as Control;
-            if (_draggedPanel == null || targetPanel == null || _draggedPanel == targetPanel)
-                return;
-
-            int fromIndex = panelPdfPreview.Controls.GetChildIndex(_draggedPanel);
-            int toIndex = panelPdfPreview.Controls.GetChildIndex(targetPanel);
-
-            panelPdfPreview.Controls.SetChildIndex(_draggedPanel, toIndex);
-
-            //Sync _pdfItems list order
-            var movedItem = _draggedPanel.Tag as PdfItem;
-            if (movedItem != null)
+            try
             {
-                _pdfItems.RemoveAt(fromIndex);
-                _pdfItems.Insert(toIndex, movedItem);
-            }
+                var targetPanel = sender as Control;
+                if (_draggedPanel == null || targetPanel == null || _draggedPanel == targetPanel)
+                    return;
 
-            _draggedPanel = null;
+                int fromIndex = panelPdfPreview.Controls.GetChildIndex(_draggedPanel);
+                int toIndex = panelPdfPreview.Controls.GetChildIndex(targetPanel);
+
+                panelPdfPreview.Controls.SetChildIndex(_draggedPanel, toIndex);
+
+                //Sync _pdfItems list order
+                var movedItem = _draggedPanel.Tag as PdfItem;
+                if (movedItem != null)
+                {
+                    _pdfItems.RemoveAt(fromIndex);
+                    _pdfItems.Insert(toIndex, movedItem);
+                }
+
+                _draggedPanel = null;
+            }
+            catch (Exception ex)
+            {
+                LogError("An error occurred at MergerPDFUI in Panel_DragDrop: ", ex);
+            }
         }
     }
 
