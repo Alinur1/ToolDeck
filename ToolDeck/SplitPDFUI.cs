@@ -247,8 +247,6 @@ namespace ToolDeck
                 // Force garbage collection
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-
-                MessageBox.Show("Cleared successfully!", "ToolDeck - Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
