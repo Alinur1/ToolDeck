@@ -15,23 +15,29 @@ namespace ToolDeck
     public partial class TimerUI : UserControl
     {
         private TimeSpan remainingTime;
+        private bool isPaused = false;
+
         public TimerUI()
         {
             InitializeComponent();
             timer1.Interval = 1000;
             labelTimer.Text = "00:00:00:00";
+            btnPause.Enabled = false;
         }
 
         private void TimerStart()
         {
-            int day = (int)numDay.Value;
-            int hour = (int)numHour.Value;
-            int minute = (int)numMinute.Value;
-            int second = (int)numSecond.Value;
-
             try
             {
-                remainingTime = new TimeSpan(day, hour, minute, second);
+                if(!isPaused)
+                {
+                    int day = (int)numDay.Value;
+                    int hour = (int)numHour.Value;
+                    int minute = (int)numMinute.Value;
+                    int second = (int)numSecond.Value;
+
+                    remainingTime = new TimeSpan(day, hour, minute, second);
+                }
 
                 if (remainingTime.TotalSeconds > 0)
                 {
@@ -39,6 +45,8 @@ namespace ToolDeck
                     timer1.Start();
                     hideUI();
                     btnStart.Enabled = false;
+                    btnPause.Enabled = true;
+                    isPaused = false;
                 }
             }
             catch (Exception ex)
@@ -66,7 +74,7 @@ namespace ToolDeck
                     MessageBox.Show("⏰ Time's up!", "ToolDeck - Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogError("An error occurred at TimerUI in timerTick: ", ex);
             }
@@ -136,6 +144,26 @@ namespace ToolDeck
             }
         }
 
+        private void PauseTimer()
+        {
+            timer1.Stop();
+            btnStart.Enabled = true;
+            btnPause.Enabled = false;
+            isPaused = true;
+        }
+
+        private void ResetTimer()
+        {
+            timer1.Stop();
+            labelTimer.Text = "00:00:00:00";
+            showUI();
+            btnStart.Enabled = true;
+            numDay.Value = 0;
+            numHour.Value = 0;
+            numMinute.Value = 0;
+            numSecond.Value = 0;
+        }
+
 
 
 
@@ -151,12 +179,14 @@ namespace ToolDeck
             timerTick();
         }
 
-        private void btnStop_Click(object sender, EventArgs e)
+        private void btnReset_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
-            labelTimer.Text = "00:00:00:00";
-            showUI();
-            btnStart.Enabled = true;
+            ResetTimer();
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            PauseTimer();
         }
     }
 }

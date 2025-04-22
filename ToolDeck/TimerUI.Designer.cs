@@ -35,12 +35,13 @@
             labelSetMinutes = new Label();
             labelTimer = new Label();
             btnStart = new Button();
-            btnStop = new Button();
+            btnPause = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
             numHour = new NumericUpDown();
             labelSetHours = new Label();
             labelSetDays = new Label();
             numDay = new NumericUpDown();
+            btnReset = new Button();
             ((System.ComponentModel.ISupportInitialize)numSecond).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMinute).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numHour).BeginInit();
@@ -55,7 +56,7 @@
             numSecond.Location = new Point(485, 129);
             numSecond.Name = "numSecond";
             numSecond.Size = new Size(90, 43);
-            numSecond.TabIndex = 1;
+            numSecond.TabIndex = 3;
             numSecond.TextAlign = HorizontalAlignment.Center;
             // 
             // numMinute
@@ -100,7 +101,7 @@
             labelTimer.Location = new Point(313, 225);
             labelTimer.Name = "labelTimer";
             labelTimer.Size = new Size(147, 32);
-            labelTimer.TabIndex = 6;
+            labelTimer.TabIndex = 4;
             labelTimer.Text = "00:00:00:00";
             // 
             // btnStart
@@ -116,34 +117,34 @@
             btnStart.FlatStyle = FlatStyle.Flat;
             btnStart.Font = new Font("Segoe UI", 14.25F);
             btnStart.ForeColor = Color.White;
-            btnStart.Location = new Point(253, 292);
+            btnStart.Location = new Point(185, 292);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(118, 55);
-            btnStart.TabIndex = 7;
+            btnStart.TabIndex = 5;
             btnStart.Text = "Start";
             btnStart.UseVisualStyleBackColor = false;
             btnStart.Click += btnStart_Click;
             // 
-            // btnStop
+            // btnPause
             // 
-            btnStop.Anchor = AnchorStyles.None;
-            btnStop.BackColor = Color.Transparent;
-            btnStop.BackgroundImageLayout = ImageLayout.Stretch;
-            btnStop.Cursor = Cursors.Hand;
-            btnStop.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
-            btnStop.FlatAppearance.CheckedBackColor = Color.Transparent;
-            btnStop.FlatAppearance.MouseDownBackColor = Color.DimGray;
-            btnStop.FlatAppearance.MouseOverBackColor = Color.Transparent;
-            btnStop.FlatStyle = FlatStyle.Flat;
-            btnStop.Font = new Font("Segoe UI", 14.25F);
-            btnStop.ForeColor = Color.White;
-            btnStop.Location = new Point(398, 292);
-            btnStop.Name = "btnStop";
-            btnStop.Size = new Size(118, 55);
-            btnStop.TabIndex = 8;
-            btnStop.Text = "Stop";
-            btnStop.UseVisualStyleBackColor = false;
-            btnStop.Click += btnStop_Click;
+            btnPause.Anchor = AnchorStyles.None;
+            btnPause.BackColor = Color.Transparent;
+            btnPause.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPause.Cursor = Cursors.Hand;
+            btnPause.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
+            btnPause.FlatAppearance.CheckedBackColor = Color.Transparent;
+            btnPause.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnPause.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnPause.FlatStyle = FlatStyle.Flat;
+            btnPause.Font = new Font("Segoe UI", 14.25F);
+            btnPause.ForeColor = Color.White;
+            btnPause.Location = new Point(330, 292);
+            btnPause.Name = "btnPause";
+            btnPause.Size = new Size(118, 55);
+            btnPause.TabIndex = 6;
+            btnPause.Text = "Pause";
+            btnPause.UseVisualStyleBackColor = false;
+            btnPause.Click += btnPause_Click;
             // 
             // timer1
             // 
@@ -158,7 +159,7 @@
             numHour.Location = new Point(293, 129);
             numHour.Name = "numHour";
             numHour.Size = new Size(90, 43);
-            numHour.TabIndex = 0;
+            numHour.TabIndex = 1;
             numHour.TextAlign = HorizontalAlignment.Center;
             // 
             // labelSetHours
@@ -191,16 +192,38 @@
             numDay.Location = new Point(197, 129);
             numDay.Name = "numDay";
             numDay.Size = new Size(90, 43);
-            numDay.TabIndex = 9;
+            numDay.TabIndex = 0;
             numDay.TextAlign = HorizontalAlignment.Center;
+            // 
+            // btnReset
+            // 
+            btnReset.Anchor = AnchorStyles.None;
+            btnReset.BackColor = Color.Transparent;
+            btnReset.BackgroundImageLayout = ImageLayout.Stretch;
+            btnReset.Cursor = Cursors.Hand;
+            btnReset.FlatAppearance.BorderColor = Color.FromArgb(115, 115, 126);
+            btnReset.FlatAppearance.CheckedBackColor = Color.Transparent;
+            btnReset.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnReset.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnReset.FlatStyle = FlatStyle.Flat;
+            btnReset.Font = new Font("Segoe UI", 14.25F);
+            btnReset.ForeColor = Color.White;
+            btnReset.Location = new Point(473, 292);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(118, 55);
+            btnReset.TabIndex = 7;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
             // 
             // TimerUI
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(46, 46, 62);
+            Controls.Add(btnReset);
             Controls.Add(labelSetDays);
             Controls.Add(numDay);
-            Controls.Add(btnStop);
+            Controls.Add(btnPause);
             Controls.Add(btnStart);
             Controls.Add(labelTimer);
             Controls.Add(labelSetMinutes);
@@ -226,11 +249,12 @@
         private Label labelSetMinutes;
         private Label labelTimer;
         private Button btnStart;
-        private Button btnStop;
+        private Button btnPause;
         private System.Windows.Forms.Timer timer1;
         private NumericUpDown numHour;
         private Label labelSetHours;
         private Label labelSetDays;
         private NumericUpDown numDay;
+        private Button btnReset;
     }
 }
