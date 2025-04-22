@@ -49,13 +49,13 @@ namespace ToolDeck
             {
                 if (string.IsNullOrEmpty(_selectedPdfPath) || !File.Exists(_selectedPdfPath))
                 {
-                    MessageBox.Show("Please select a valid PDF file first.");
+                    MessageBox.Show("Please select a valid PDF file first.", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txtPageRanges.Text))
                 {
-                    MessageBox.Show("Please enter a valid page range (e.g., 1-3,5-6).");
+                    MessageBox.Show("Please enter a valid page range (e.g., 1-3,5-6).", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -67,11 +67,12 @@ namespace ToolDeck
                         try
                         {
                             SplitPdfByRanges(_selectedPdfPath, txtPageRanges.Text, saveDirectory);
-                            MessageBox.Show("PDF split successfully!", "Success");
+                            MessageBox.Show("PDF split successfully!", "ToolDeck - Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error splitting PDF: " + ex.Message);
+                            MessageBox.Show("An error occurred while splitting the PDF.", "ToolDeck - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LogError("An error occurred at SplitPDFUI in SaveSplittedPDFFile: ", ex);
                         }
                     }
                 }
@@ -214,7 +215,7 @@ namespace ToolDeck
             catch (Exception ex)
             {
                 //LogError("An error occurred at SplitPDFUI in RenderPdfPagePreviews: ", ex);
-                MessageBox.Show("Please select a PDF file.", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please select a PDF file.", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -247,7 +248,7 @@ namespace ToolDeck
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
-                MessageBox.Show("Cleared successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Cleared successfully!", "ToolDeck - Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {

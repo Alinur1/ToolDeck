@@ -133,7 +133,7 @@ namespace ToolDeck
                     }
                     catch (Exception innerEx)
                     {
-                        MessageBox.Show($"Error merging file:\n{file}\n\n{innerEx.Message}", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Error merging file:\n{file}\n\n{innerEx.Message}", "ToolDeck - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -186,7 +186,7 @@ namespace ToolDeck
             {
                 if (_pdfItems.Count < 2)
                 {
-                    MessageBox.Show("Please add at least two PDF files to merge.", "Warning");
+                    MessageBox.Show("Please add at least two PDF files to merge.", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -200,11 +200,11 @@ namespace ToolDeck
                         try
                         {
                             MergePdfFiles(_pdfItems.Select(p => p.FilePath).ToList(), sfd.FileName);
-                            MessageBox.Show("Merged PDF saved successfully!", "Success");
+                            MessageBox.Show("Merged PDF saved successfully!", "ToolDeck - Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("PDF didn't merge due to an error.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("PDF didn't merge due to an error.", "ToolDeck - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             LogError("An error occurred at MergerPDFUI in SaveMergedFiles#1: ", ex);
                         }
                     }

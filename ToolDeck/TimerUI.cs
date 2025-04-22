@@ -63,7 +63,7 @@ namespace ToolDeck
                     labelTimer.Text = "00:00:00:00";
                     showUI();
                     btnStart.Enabled = true;
-                    MessageBox.Show("⏰ Time's up!", "ToolDeck", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("⏰ Time's up!", "ToolDeck - Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch(Exception ex)
