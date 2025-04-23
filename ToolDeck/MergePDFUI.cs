@@ -43,7 +43,7 @@ namespace ToolDeck
             }
         }
 
-        private void RenderPdfPreview()
+        private async void RenderPdfPreview()
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ToolDeck
 
                     var picBox = new PictureBox
                     {
-                        Image = GetPdfThumbnail(item.FilePath),
+                        Image = await Task.Run(() => GetPdfThumbnail(item.FilePath)),
                         SizeMode = PictureBoxSizeMode.Zoom,
                         Dock = DockStyle.Top,
                         Height = 190

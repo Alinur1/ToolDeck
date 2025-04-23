@@ -22,7 +22,7 @@ namespace ToolDeck
             InitializeComponent();
         }
 
-        private void SelectPDFFile()
+        private async void SelectPDFFile()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace ToolDeck
                         lblSelectedFile.Text = Path.GetFileName(_selectedPdfPath);
                     }
                 }
-                RenderPdfPagePreviews(_selectedPdfPath);
+                await RenderPdfPagePreviewsAsync(_selectedPdfPath);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace ToolDeck
             }
         }
 
-        private void SaveSplittedPDFFile()
+        private async void SaveSplittedPDFFile()
         {
             try
             {
@@ -66,7 +66,7 @@ namespace ToolDeck
                         string saveDirectory = fbd.SelectedPath;
                         try
                         {
-                            SplitPdfByRanges(_selectedPdfPath, txtPageRanges.Text, saveDirectory);
+                            await SplitPdfByRanges(_selectedPdfPath, txtPageRanges.Text, saveDirectory);
                             MessageBox.Show("PDF split successfully!", "ToolDeck - Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
@@ -83,32 +83,35 @@ namespace ToolDeck
             }
         }
 
-        private void SplitPdfByRanges(string inputPath, string rangesText, string outputFolder)
+        private async Task SplitPdfByRanges(string inputPath, string rangesText, string outputFolder)
         {
-            try
+            await Task.Run(() =>
             {
-                using var reader = new PdfReader(inputPath);
-                using var pdf = new PdfDocument(reader);
-                int totalPages = pdf.GetNumberOfPages();
-
-                var ranges = ParseRanges(rangesText, totalPages);
-
-                int splitIndex = 1;
-                foreach (var (start, end) in ranges)
+                try
                 {
-                    string outputPath = Path.Combine(outputFolder, $"Split_{splitIndex++}.pdf");
+                    using var reader = new PdfReader(inputPath);
+                    using var pdf = new PdfDocument(reader);
+                    int totalPages = pdf.GetNumberOfPages();
 
-                    using var writer = new PdfWriter(outputPath);
-                    using var newPdf = new PdfDocument(writer);
-                    var merger = new PdfMerger(newPdf);
+                    var ranges = ParseRanges(rangesText, totalPages);
 
-                    merger.Merge(pdf, start, end);
+                    int splitIndex = 1;
+                    foreach (var (start, end) in ranges)
+                    {
+                        string outputPath = Path.Combine(outputFolder, $"Split_{splitIndex++}.pdf");
+
+                        using var writer = new PdfWriter(outputPath);
+                        using var newPdf = new PdfDocument(writer);
+                        var merger = new PdfMerger(newPdf);
+
+                        merger.Merge(pdf, start, end);
+                    }
                 }
-            }
-            catch(Exception ex)
-            {
-                LogError("An error occurred at SplitPDFUI in SplitPdfByRanges: ", ex);
-            }
+                catch (Exception ex)
+                {
+                    LogError("An error occurred at SplitPDFUI in SplitPdfByRanges: ", ex);
+                }
+            });
         }
 
         private List<(int start, int end)> ParseRanges(string input, int maxPages)
@@ -161,62 +164,67 @@ namespace ToolDeck
         }
 
 
-        private void RenderPdfPagePreviews(string filePath)
+        private async Task RenderPdfPagePreviewsAsync(string filePath)
         {
-            try
+            panelPagePreview.Controls.Clear();
+
+            await Task.Run(() =>
             {
-                panelPagePreview.Controls.Clear();
-
-                using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
+                try
                 {
-                    for (int i = 0; i < pdfDoc.PageCount; i++)
+                    using (var pdfDoc = PdfiumViewer.PdfDocument.Load(filePath))
                     {
-                        var image = pdfDoc.Render(i, 150, 250, true);
-
-                        PictureBox pb = new PictureBox
+                        for (int i = 0; i < pdfDoc.PageCount; i++)
                         {
-                            Image = image,
-                            SizeMode = PictureBoxSizeMode.Zoom,
-                            Width = 150,
-                            Height = 250,
-                            Margin = new Padding(5),
-                            BackColor = Color.FromArgb(46, 46, 62)
-                        };
+                            var image = pdfDoc.Render(i, 150, 250, true);
+                            int pageNum = i + 1;
 
-                        Label lbl = new Label
-                        {
-                            Text = $"Page {i + 1}",
-                            TextAlign = ContentAlignment.MiddleCenter,
-                            Width = pb.Width,
-                            Height = 30,
-                            Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                            ForeColor = Color.White,
-                            BackColor = Color.FromArgb(46, 46, 62)
-                        };
+                            Invoke(new Action(() =>
+                            {
+                                PictureBox pb = new PictureBox
+                                {
+                                    Image = image,
+                                    SizeMode = PictureBoxSizeMode.Zoom,
+                                    Width = 150,
+                                    Height = 250,
+                                    Margin = new Padding(5),
+                                    BackColor = Color.FromArgb(46, 46, 62)
+                                };
 
-                        var panel = new Panel
-                        {
-                            Width = pb.Width + 10,
-                            Height = pb.Height + lbl.Height + 10,
-                            BackColor = Color.FromArgb(46, 46, 62),
-                            Margin = new Padding(10)
-                        };
+                                Label lbl = new Label
+                                {
+                                    Text = $"Page {pageNum}",
+                                    TextAlign = ContentAlignment.MiddleCenter,
+                                    Width = pb.Width,
+                                    Height = 30,
+                                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                                    ForeColor = Color.White,
+                                    BackColor = Color.FromArgb(46, 46, 62)
+                                };
 
-                        lbl.Top = pb.Bottom;
-                        lbl.Left = 0;
+                                Panel panel = new Panel
+                                {
+                                    Width = pb.Width + 10,
+                                    Height = pb.Height + lbl.Height + 10,
+                                    BackColor = Color.FromArgb(46, 46, 62),
+                                    Margin = new Padding(10)
+                                };
 
-                        panel.Controls.Add(pb);
-                        panel.Controls.Add(lbl);
+                                lbl.Top = pb.Bottom;
+                                panel.Controls.Add(pb);
+                                panel.Controls.Add(lbl);
 
-                        panelPagePreview.Controls.Add(panel);
+                                panelPagePreview.Controls.Add(panel);
+                            }));
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                //LogError("An error occurred at SplitPDFUI in RenderPdfPagePreviews: ", ex);
-                MessageBox.Show("Please select a PDF file.", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+                catch (Exception ex)
+                {
+                    //LogError("An error occurred at SplitPDFUI in RenderPdfPagePreviewsAsync: ", ex);
+                    //MessageBox.Show("Please select a PDF.", "ToolDeck - Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            });
         }
 
         private void ClearAll()
@@ -243,7 +251,7 @@ namespace ToolDeck
 
                 panelPagePreview.Controls.Clear();
                 txtPageRanges.Clear();
-
+                _selectedPdfPath = string.Empty;
                 // Force garbage collection
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
