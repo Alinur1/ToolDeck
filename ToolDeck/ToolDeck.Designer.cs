@@ -41,7 +41,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnMergePDF = new Button();
             btnSplitPDF = new Button();
-            button3 = new Button();
+            btnCompressPDF = new Button();
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
@@ -183,10 +183,11 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.FromArgb(102, 102, 105);
             flowLayoutPanel1.Controls.Add(btnMergePDF);
             flowLayoutPanel1.Controls.Add(btnSplitPDF);
-            flowLayoutPanel1.Controls.Add(button3);
+            flowLayoutPanel1.Controls.Add(btnCompressPDF);
             flowLayoutPanel1.Controls.Add(button4);
             flowLayoutPanel1.Controls.Add(button5);
             flowLayoutPanel1.Controls.Add(button6);
@@ -234,21 +235,22 @@
             btnSplitPDF.UseVisualStyleBackColor = true;
             btnSplitPDF.Click += btnSplitPDF_Click;
             // 
-            // button3
+            // btnCompressPDF
             // 
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderColor = Color.White;
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button3.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(3, 105);
-            button3.Name = "button3";
-            button3.Size = new Size(182, 45);
-            button3.TabIndex = 2;
-            button3.Text = "Compress PDF size";
-            button3.UseVisualStyleBackColor = true;
+            btnCompressPDF.Cursor = Cursors.Hand;
+            btnCompressPDF.FlatAppearance.BorderColor = Color.White;
+            btnCompressPDF.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnCompressPDF.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnCompressPDF.FlatStyle = FlatStyle.Flat;
+            btnCompressPDF.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCompressPDF.ForeColor = Color.White;
+            btnCompressPDF.Location = new Point(3, 105);
+            btnCompressPDF.Name = "btnCompressPDF";
+            btnCompressPDF.Size = new Size(182, 45);
+            btnCompressPDF.TabIndex = 2;
+            btnCompressPDF.Text = "Compress PDF size";
+            btnCompressPDF.UseVisualStyleBackColor = true;
+            btnCompressPDF.Click += btnCompressPDF_Click;
             // 
             // button4
             // 
@@ -440,7 +442,7 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Button btnMergePDF;
         private Button btnSplitPDF;
-        private Button button3;
+        private Button btnCompressPDF;
         private Button button4;
         private Button button5;
         private Button button6;

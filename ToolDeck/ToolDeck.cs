@@ -8,6 +8,7 @@ namespace ToolDeck
         StopWatchUI stopWatchUI = new StopWatchUI();
         MergePDF mergePDFUI = new MergePDF();
         SplitPDFUI splitPDFUI = new SplitPDFUI();
+        CompressPDFUI compressPDFUI = new CompressPDFUI();
 
         public ToolDeck()
         {
@@ -55,6 +56,11 @@ namespace ToolDeck
         private void btnSplitPDF_Click(object sender, EventArgs e)
         {
             addPDFToolsUserControl(splitPDFUI);
+        }
+
+        private void btnCompressPDF_Click(object sender, EventArgs e)
+        {
+            addPDFToolsUserControl(compressPDFUI);
         }
     }
 }
