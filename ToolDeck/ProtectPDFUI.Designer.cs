@@ -149,8 +149,7 @@
             // 
             // ProtectPDFUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(46, 46, 62);
             Controls.Add(lblOrDragDrop);
             Controls.Add(panelPdfPreview);
