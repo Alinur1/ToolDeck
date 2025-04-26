@@ -12,6 +12,7 @@ namespace ToolDeck
         SplitPDFUI splitPDFUI = new SplitPDFUI();
         CompressPDFUI compressPDFUI = new CompressPDFUI();
         ProtectPDFUI protectPDFUI = new ProtectPDFUI();
+        ReorderPagesUI reorderPagesUI = new ReorderPagesUI();
 
         public ToolDeck()
         {
@@ -69,6 +70,11 @@ namespace ToolDeck
         private void btnProtectPDF_Click(object sender, EventArgs e)
         {
             addPDFToolsUserControl(protectPDFUI);
+        }
+
+        private void btnReorderPage_Click(object sender, EventArgs e)
+        {
+            addPDFToolsUserControl(reorderPagesUI);
         }
     }
 }

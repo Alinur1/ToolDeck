@@ -43,7 +43,7 @@
             btnSplitPDF = new Button();
             btnCompressPDF = new Button();
             btnProtectPDF = new Button();
-            button5 = new Button();
+            btnReorderPage = new Button();
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
@@ -189,7 +189,7 @@
             flowLayoutPanel1.Controls.Add(btnSplitPDF);
             flowLayoutPanel1.Controls.Add(btnCompressPDF);
             flowLayoutPanel1.Controls.Add(btnProtectPDF);
-            flowLayoutPanel1.Controls.Add(button5);
+            flowLayoutPanel1.Controls.Add(btnReorderPage);
             flowLayoutPanel1.Controls.Add(button6);
             flowLayoutPanel1.Controls.Add(button7);
             flowLayoutPanel1.Controls.Add(button8);
@@ -269,21 +269,22 @@
             btnProtectPDF.UseVisualStyleBackColor = true;
             btnProtectPDF.Click += btnProtectPDF_Click;
             // 
-            // button5
+            // btnReorderPage
             // 
-            button5.Cursor = Cursors.Hand;
-            button5.FlatAppearance.BorderColor = Color.White;
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button5.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button5.ForeColor = Color.White;
-            button5.Location = new Point(3, 207);
-            button5.Name = "button5";
-            button5.Size = new Size(182, 45);
-            button5.TabIndex = 4;
-            button5.Text = "Sort/reorder pages";
-            button5.UseVisualStyleBackColor = true;
+            btnReorderPage.Cursor = Cursors.Hand;
+            btnReorderPage.FlatAppearance.BorderColor = Color.White;
+            btnReorderPage.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnReorderPage.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnReorderPage.FlatStyle = FlatStyle.Flat;
+            btnReorderPage.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReorderPage.ForeColor = Color.White;
+            btnReorderPage.Location = new Point(3, 207);
+            btnReorderPage.Name = "btnReorderPage";
+            btnReorderPage.Size = new Size(182, 45);
+            btnReorderPage.TabIndex = 4;
+            btnReorderPage.Text = "Reorder PDF Page";
+            btnReorderPage.UseVisualStyleBackColor = true;
+            btnReorderPage.Click += btnReorderPage_Click;
             // 
             // button6
             // 
@@ -445,7 +446,7 @@
         private Button btnSplitPDF;
         private Button btnCompressPDF;
         private Button btnProtectPDF;
-        private Button button5;
+        private Button btnReorderPage;
         private Button button6;
         private Button button7;
         private Button button8;
