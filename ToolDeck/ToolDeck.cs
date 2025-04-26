@@ -2,13 +2,16 @@ namespace ToolDeck
 {
     public partial class ToolDeck : Form
     {
-
+        //Clock
         ClockUI clock = new ClockUI();
         TimerUI timerUI = new TimerUI();
         StopWatchUI stopWatchUI = new StopWatchUI();
+
+        //PDF Tools
         MergePDF mergePDFUI = new MergePDF();
         SplitPDFUI splitPDFUI = new SplitPDFUI();
         CompressPDFUI compressPDFUI = new CompressPDFUI();
+        ProtectPDFUI protectPDFUI = new ProtectPDFUI();
 
         public ToolDeck()
         {
@@ -61,6 +64,11 @@ namespace ToolDeck
         private void btnCompressPDF_Click(object sender, EventArgs e)
         {
             addPDFToolsUserControl(compressPDFUI);
+        }
+
+        private void btnProtectPDF_Click(object sender, EventArgs e)
+        {
+            addPDFToolsUserControl(protectPDFUI);
         }
     }
 }

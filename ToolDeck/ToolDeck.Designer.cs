@@ -42,7 +42,7 @@
             btnMergePDF = new Button();
             btnSplitPDF = new Button();
             btnCompressPDF = new Button();
-            button4 = new Button();
+            btnProtectPDF = new Button();
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
@@ -188,7 +188,7 @@
             flowLayoutPanel1.Controls.Add(btnMergePDF);
             flowLayoutPanel1.Controls.Add(btnSplitPDF);
             flowLayoutPanel1.Controls.Add(btnCompressPDF);
-            flowLayoutPanel1.Controls.Add(button4);
+            flowLayoutPanel1.Controls.Add(btnProtectPDF);
             flowLayoutPanel1.Controls.Add(button5);
             flowLayoutPanel1.Controls.Add(button6);
             flowLayoutPanel1.Controls.Add(button7);
@@ -252,21 +252,22 @@
             btnCompressPDF.UseVisualStyleBackColor = true;
             btnCompressPDF.Click += btnCompressPDF_Click;
             // 
-            // button4
+            // btnProtectPDF
             // 
-            button4.Cursor = Cursors.Hand;
-            button4.FlatAppearance.BorderColor = Color.White;
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button4.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.White;
-            button4.Location = new Point(3, 156);
-            button4.Name = "button4";
-            button4.Size = new Size(182, 45);
-            button4.TabIndex = 3;
-            button4.Text = "Protect PDF";
-            button4.UseVisualStyleBackColor = true;
+            btnProtectPDF.Cursor = Cursors.Hand;
+            btnProtectPDF.FlatAppearance.BorderColor = Color.White;
+            btnProtectPDF.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnProtectPDF.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnProtectPDF.FlatStyle = FlatStyle.Flat;
+            btnProtectPDF.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnProtectPDF.ForeColor = Color.White;
+            btnProtectPDF.Location = new Point(3, 156);
+            btnProtectPDF.Name = "btnProtectPDF";
+            btnProtectPDF.Size = new Size(182, 45);
+            btnProtectPDF.TabIndex = 3;
+            btnProtectPDF.Text = "Protect PDF";
+            btnProtectPDF.UseVisualStyleBackColor = true;
+            btnProtectPDF.Click += btnProtectPDF_Click;
             // 
             // button5
             // 
@@ -443,7 +444,7 @@
         private Button btnMergePDF;
         private Button btnSplitPDF;
         private Button btnCompressPDF;
-        private Button button4;
+        private Button btnProtectPDF;
         private Button button5;
         private Button button6;
         private Button button7;
