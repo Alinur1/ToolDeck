@@ -21,8 +21,6 @@ namespace ToolDeck
         private Control _draggedPanel = null;
         private int _draggedPanelIndex;
 
-
-
         public ReorderPagesUI()
         {
             InitializeComponent();
@@ -55,7 +53,7 @@ namespace ToolDeck
             }
             catch (Exception ex)
             {
-                LogError("An error occurred at ReorderPagesUI in SelectPDFFile: ", ex);
+                LogError("An error occurred at ReorderPagesUI in SelectPDF: ", ex);
             }
         }
 
@@ -91,105 +89,42 @@ namespace ToolDeck
 
         private void SavePDF()
         {
-            if (string.IsNullOrEmpty(_selectedPdfPath)) return;
-
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            try
             {
-                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
-                sfd.FileName = "Reordered.pdf";
+                if (string.IsNullOrEmpty(_selectedPdfPath)) return;
 
-                if (sfd.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog sfd = new SaveFileDialog())
                 {
-                    using (PdfReader reader = new PdfReader(_selectedPdfPath))
-                    using (PdfWriter writer = new PdfWriter(sfd.FileName))
-                    using (PdfDocument srcDoc = new PdfDocument(reader))
-                    using (PdfDocument destDoc = new PdfDocument(writer))
+                    sfd.Filter = "PDF Files (*.pdf)|*.pdf";
+                    sfd.FileName = $"{DateTime.Now} - Reordered.pdf";
+
+                    if (sfd.ShowDialog() == DialogResult.OK)
                     {
-                        foreach (Control control in panelPdfPreview.Controls)
+                        using (PdfReader reader = new PdfReader(_selectedPdfPath))
+                        using (PdfWriter writer = new PdfWriter(sfd.FileName))
+                        using (PdfDocument srcDoc = new PdfDocument(reader))
+                        using (PdfDocument destDoc = new PdfDocument(writer))
                         {
-                            // Label stores page info: "Page X"
-                            Label lbl = control.Controls.OfType<Label>().FirstOrDefault();
-                            if (lbl != null && lbl.Text.StartsWith("Page"))
+                            foreach (Control control in panelPdfPreview.Controls)
                             {
-                                int pageNum = int.Parse(lbl.Text.Replace("Page", "").Trim());
-                                srcDoc.CopyPagesTo(pageNum, pageNum, destDoc);
+                                Label lbl = control.Controls.OfType<Label>().FirstOrDefault();
+                                if (lbl != null && lbl.Text.StartsWith("Page"))
+                                {
+                                    int pageNum = int.Parse(lbl.Text.Replace("Page", "").Trim());
+                                    srcDoc.CopyPagesTo(pageNum, pageNum, destDoc);
+                                }
                             }
                         }
-                    }
 
-                    MessageBox.Show("PDF saved in the new order!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("PDF saved in the new order!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at ReorderPagesUI in SavePDF: ", ex);
+            }
         }
-
-        //private async Task RenderPdfPagePreviewsAsync(string filePath)
-        //{
-        //    panelPdfPreview.Controls.Clear();
-
-        //    await Task.Run(() =>
-        //    {
-        //        try
-        //        {
-        //            foreach (var item in _pdfItems)
-        //            {
-        //                using (var pdfDoc = PdfiumViewer.PdfDocument.Load(item.FilePath))
-        //                {
-        //                    for (int i = 0; i < pdfDoc.PageCount; i++)
-        //                    {
-        //                        var image = pdfDoc.Render(i, 150, 250, true);
-        //                        int pageNum = i + 1;
-
-        //                        Invoke(new Action(() =>
-        //                        {
-        //                            PictureBox pb = new PictureBox
-        //                            {
-        //                                Image = image,
-        //                                SizeMode = PictureBoxSizeMode.Zoom,
-        //                                Dock = DockStyle.Top,
-        //                                Width = 150,
-        //                                Height = 250,
-        //                                Margin = new Padding(5),
-        //                                BackColor = Color.FromArgb(46, 46, 62)
-        //                            };
-
-        //                            Label lbl = new Label
-        //                            {
-        //                                Text = $"Page {pageNum}",
-        //                                TextAlign = ContentAlignment.MiddleCenter,
-        //                                Width = pb.Width,
-        //                                Height = 30,
-        //                                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-        //                                ForeColor = Color.White,
-        //                                BackColor = Color.FromArgb(46, 46, 62)
-        //                            };
-
-        //                            Panel panel = new Panel
-        //                            {
-        //                                Width = pb.Width + 40,
-        //                                Height = pb.Height + lbl.Height + 40,
-        //                                BorderStyle = BorderStyle.FixedSingle,
-        //                                BackColor = Color.FromArgb(46, 46, 62),
-        //                                Margin = new Padding(10)
-        //                            };
-        //                            panel.MouseDown += PagePanel_MouseDown;
-        //                            panel.MouseMove += PagePanel_MouseMove;
-
-
-        //                            lbl.Top = pb.Bottom;
-        //                            panel.Controls.Add(pb);
-        //                            panel.Controls.Add(lbl);
-        //                            panelPdfPreview.Controls.Add(panel);
-        //                        }));
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            LogError("An error occurred at ReorderPagesUI in RenderPdfPagePreviewsAsync: ", ex);
-        //        }
-        //    });
-        //}
 
         private async Task RenderPdfPagePreviewsAsync(string filePath)
         {
@@ -244,7 +179,6 @@ namespace ToolDeck
                                     panel.MouseDown += PagePanel_MouseDown;
                                     panel.MouseMove += PagePanel_MouseMove;
 
-                                    // Add to parent
                                     panel.Controls.Add(pb);
                                     panel.Controls.Add(lbl);
                                     panelPdfPreview.Controls.Add(panel);
@@ -306,7 +240,7 @@ namespace ToolDeck
             }
             catch (Exception ex)
             {
-                LogError("An error occurred at ReorderPagesUI in Panel_MouseDown: ", ex);
+                LogError("An error occurred at ReorderPagesUI in panelPdfPreview_MouseDown: ", ex);
             }
         }
 
@@ -333,27 +267,32 @@ namespace ToolDeck
             }
         }
 
-
         private async void panelPdfPreview_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(Panel)))
+            try
             {
-                Panel droppedPanel = (Panel)e.Data.GetData(typeof(Panel));
-                Point clientPoint = panelPdfPreview.PointToClient(new Point(e.X, e.Y));
-                Control target = panelPdfPreview.GetChildAtPoint(clientPoint);
-
-                if (target != null && target != droppedPanel)
+                if (e.Data.GetDataPresent(typeof(Panel)))
                 {
-                    int targetIndex = panelPdfPreview.Controls.GetChildIndex(target);
-                    panelPdfPreview.Controls.SetChildIndex(droppedPanel, targetIndex);
-                    panelPdfPreview.Invalidate();
-                }
+                    Panel droppedPanel = (Panel)e.Data.GetData(typeof(Panel));
+                    Point clientPoint = panelPdfPreview.PointToClient(new Point(e.X, e.Y));
+                    Control target = panelPdfPreview.GetChildAtPoint(clientPoint);
 
-                _draggedPanel = null;
-                return;
+                    if (target != null && target != droppedPanel)
+                    {
+                        int targetIndex = panelPdfPreview.Controls.GetChildIndex(target);
+                        panelPdfPreview.Controls.SetChildIndex(droppedPanel, targetIndex);
+                        panelPdfPreview.Invalidate();
+                    }
+
+                    _draggedPanel = null;
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                LogError("An error occurred at ReorderPagesUI in panelPdfPreview_DragDrop#1: ", ex);
             }
 
-            // This is for file dropping (already exists in your code)
             try
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -364,15 +303,14 @@ namespace ToolDeck
                         _selectedPdfPath = file;
                         _pdfItems.Add(new PdfItem { FilePath = file });
                         await RenderPdfPagePreviewsAsync(_selectedPdfPath);
-                        break; // Only handle the first valid PDF file
+                        break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogError("An error occurred at ReorderPagesUI in panelPdfPreview_DragDrop: ", ex);
+                LogError("An error occurred at ReorderPagesUI in panelPdfPreview_DragDrop#2: ", ex);
             }
         }
-
     }
 }
