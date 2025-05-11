@@ -2,6 +2,7 @@ namespace ToolDeck
 {
     public partial class ToolDeck : Form
     {
+        private Button _activeButton;
         //Clock
         ClockUI clock = new ClockUI();
         TimerUI timerUI = new TimerUI();
@@ -19,6 +20,18 @@ namespace ToolDeck
             InitializeComponent();
             addClockUserControl(clock);
             addPDFToolsUserControl(mergePDFUI);
+        }
+
+        private void HighlightButton(Button selectedButton)
+        {
+            if (_activeButton != null)
+            {
+                _activeButton.FlatAppearance.BorderColor = Color.White;
+                _activeButton.FlatAppearance.BorderSize = 1;
+            }
+            _activeButton = selectedButton;
+            _activeButton.FlatAppearance.BorderColor = Color.Red;
+            _activeButton.FlatAppearance.BorderSize = 2;
         }
 
         private void addClockUserControl(UserControl userControl)
@@ -39,41 +52,49 @@ namespace ToolDeck
 
         private void btnClock_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addClockUserControl(clock);
         }
 
         private void btnTimer_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addClockUserControl(timerUI);
         }
 
         private void btnStopwatch_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addClockUserControl(stopWatchUI);
         }
 
         private void btnMergePDF_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addPDFToolsUserControl(mergePDFUI);
         }
 
         private void btnSplitPDF_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addPDFToolsUserControl(splitPDFUI);
         }
 
         private void btnCompressPDF_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addPDFToolsUserControl(compressPDFUI);
         }
 
         private void btnProtectPDF_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addPDFToolsUserControl(protectPDFUI);
         }
 
         private void btnReorderPage_Click(object sender, EventArgs e)
         {
+            HighlightButton((Button)sender);
             addPDFToolsUserControl(reorderPagesUI);
         }
     }
