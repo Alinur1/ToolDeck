@@ -97,5 +97,11 @@ namespace ToolDeck
             HighlightButton((Button)sender);
             addPDFToolsUserControl(reorderPagesUI);
         }
+
+        private void btnSignPDF_Click(object sender, EventArgs e)
+        {
+            HighlightButton((Button)sender);
+            MessageBox.Show("Still under development. Sorry for the inconvenience.", "ToolDeck - Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

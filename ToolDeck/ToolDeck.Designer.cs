@@ -44,8 +44,7 @@
             btnCompressPDF = new Button();
             btnProtectPDF = new Button();
             btnReorderPage = new Button();
-            button6 = new Button();
-            button7 = new Button();
+            btnSignPDF = new Button();
             button8 = new Button();
             button9 = new Button();
             button10 = new Button();
@@ -190,8 +189,7 @@
             flowLayoutPanel1.Controls.Add(btnCompressPDF);
             flowLayoutPanel1.Controls.Add(btnProtectPDF);
             flowLayoutPanel1.Controls.Add(btnReorderPage);
-            flowLayoutPanel1.Controls.Add(button6);
-            flowLayoutPanel1.Controls.Add(button7);
+            flowLayoutPanel1.Controls.Add(btnSignPDF);
             flowLayoutPanel1.Controls.Add(button8);
             flowLayoutPanel1.Controls.Add(button9);
             flowLayoutPanel1.Controls.Add(button10);
@@ -286,37 +284,22 @@
             btnReorderPage.UseVisualStyleBackColor = true;
             btnReorderPage.Click += btnReorderPage_Click;
             // 
-            // button6
+            // btnSignPDF
             // 
-            button6.Cursor = Cursors.Hand;
-            button6.FlatAppearance.BorderColor = Color.White;
-            button6.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button6.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button6.FlatStyle = FlatStyle.Flat;
-            button6.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button6.ForeColor = Color.White;
-            button6.Location = new Point(3, 258);
-            button6.Name = "button6";
-            button6.Size = new Size(182, 45);
-            button6.TabIndex = 5;
-            button6.Text = "Sign PDFs";
-            button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            button7.Cursor = Cursors.Hand;
-            button7.FlatAppearance.BorderColor = Color.White;
-            button7.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
-            button7.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button7.FlatStyle = FlatStyle.Flat;
-            button7.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button7.ForeColor = Color.White;
-            button7.Location = new Point(3, 309);
-            button7.Name = "button7";
-            button7.Size = new Size(182, 45);
-            button7.TabIndex = 6;
-            button7.Text = "Freehand annotations";
-            button7.UseVisualStyleBackColor = true;
+            btnSignPDF.Cursor = Cursors.Hand;
+            btnSignPDF.FlatAppearance.BorderColor = Color.White;
+            btnSignPDF.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
+            btnSignPDF.FlatAppearance.MouseOverBackColor = Color.Silver;
+            btnSignPDF.FlatStyle = FlatStyle.Flat;
+            btnSignPDF.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSignPDF.ForeColor = Color.White;
+            btnSignPDF.Location = new Point(3, 258);
+            btnSignPDF.Name = "btnSignPDF";
+            btnSignPDF.Size = new Size(182, 45);
+            btnSignPDF.TabIndex = 5;
+            btnSignPDF.Text = "Sign PDFs";
+            btnSignPDF.UseVisualStyleBackColor = true;
+            btnSignPDF.Click += btnSignPDF_Click;
             // 
             // button8
             // 
@@ -327,7 +310,7 @@
             button8.FlatStyle = FlatStyle.Flat;
             button8.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button8.ForeColor = Color.White;
-            button8.Location = new Point(3, 360);
+            button8.Location = new Point(3, 309);
             button8.Name = "button8";
             button8.Size = new Size(182, 45);
             button8.TabIndex = 7;
@@ -343,7 +326,7 @@
             button9.FlatStyle = FlatStyle.Flat;
             button9.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button9.ForeColor = Color.White;
-            button9.Location = new Point(3, 411);
+            button9.Location = new Point(3, 360);
             button9.Name = "button9";
             button9.Size = new Size(182, 45);
             button9.TabIndex = 8;
@@ -359,7 +342,7 @@
             button10.FlatStyle = FlatStyle.Flat;
             button10.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button10.ForeColor = Color.White;
-            button10.Location = new Point(3, 462);
+            button10.Location = new Point(3, 411);
             button10.Name = "button10";
             button10.Size = new Size(182, 45);
             button10.TabIndex = 9;
@@ -447,8 +430,7 @@
         private Button btnCompressPDF;
         private Button btnProtectPDF;
         private Button btnReorderPage;
-        private Button button6;
-        private Button button7;
+        private Button btnSignPDF;
         private Button button8;
         private Button button9;
         private Button button10;
